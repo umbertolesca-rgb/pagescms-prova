@@ -1,0 +1,14 @@
+media: media
+
+content:
+  - name: pagine
+    label: Pagine
+    type: collection
+    path: docs
+    fields:
+      - name: title
+        label: Titolo
+        type: string
+      - name: body
+        label: Contenuto
+        type: rich-text
