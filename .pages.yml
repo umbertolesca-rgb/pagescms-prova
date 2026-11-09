@@ -77,7 +77,7 @@ actions:
   - name: richiesta-revisione
     label: Richiedi approvazione
     workflow: richiesta-revisione.yml
-    ref: current
+    ref: main
     cancelable: false
     confirm:
       title: Invia le modifiche in revisione?
