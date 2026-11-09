@@ -10,5 +10,4 @@ programma:
     interpreti: i tenori
     oltreLaMusica: "il brano è stato composto da Tiziana per celebrare il compleanno
       del coro. "
-  - {}
 ---
