@@ -73,3 +73,13 @@ content:
           - name: oltreLaMusica
             label: Oltre la musica
             type: text
+actions:
+  - name: richiesta-revisione
+    label: Richiedi approvazione
+    workflow: richiesta-revisione.yml
+    ref: current
+    cancelable: false
+    confirm:
+      title: Invia le modifiche in revisione?
+      message: Verrà creata una Pull Request verso main. Il sito non verrà pubblicato.
+      button: Richiedi approvazione
