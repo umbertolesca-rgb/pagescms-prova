@@ -1,0 +1,63 @@
+name: Richiesta di revisione
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Dati inviati da Pages CMS
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  crea-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Crea la richiesta di revisione
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const payload = JSON.parse(
+              context.payload.inputs.payload
+            );
+
+            const { owner, repo } = context.repo;
+
+            let branch = payload.repository.ref;
+            branch = branch.replace("refs/heads/", "");
+
+            if (branch !== "bozze") {
+              throw new Error(
+                `Branch non autorizzato: ${branch}. È consentito solo bozze.`
+              );
+            }
+
+            const existing = await github.rest.pulls.list({
+              owner,
+              repo,
+              head: `${owner}:${branch}`,
+              base: "main",
+              state: "open"
+            });
+
+            if (existing.data.length > 0) {
+              core.info(
+                `Esiste già una Pull Request aperta: ${existing.data[0].html_url}`
+              );
+              return;
+            }
+
+            const pr = await github.rest.pulls.create({
+              owner,
+              repo,
+              head: branch,
+              base: "main",
+              title: "Revisione dei contenuti dei concerti",
+              body: "Richiesta di revisione delle modifiche preparate tramite Pages CMS. Controllare le differenze prima dell'integrazione in main."
+            });
+
+            core.info(`Pull Request creata: ${pr.data.html_url}`);
