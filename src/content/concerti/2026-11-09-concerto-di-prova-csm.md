@@ -4,6 +4,7 @@ ora: 18:00
 luogo: Sala Prove
 titolo: Concerto di prova CSM
 descrizione: Verifica del sistema di gestione concerti.
+immagine: /immagini/corbetta.jpg
 programma:
   - titolo: Happy birthday
     autore: Tiziana Ravetti
