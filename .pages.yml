@@ -1,14 +1,85 @@
-media: media
+media:
+  input: public/immagini
+  output: /immagini
 
 content:
-  - name: pagine
-    label: Pagine
+  - name: concerti
+    label: Concerti
     type: collection
-    path: docs
+    path: src/content/concerti
+    format: yaml-frontmatter
+    filename:
+      template: "{data}-{primary}.md"
+      field: false
+    view:
+      primary: titolo
+      fields: [titolo, data, luogo]
+      sort: [data, titolo]
+      default:
+        sort: data
+        order: desc
     fields:
-      - name: title
-        label: Titolo
+      - name: data
+        label: Data del concerto
+        type: date
+        required: true
+
+      - name: ora
+        label: Orario
         type: string
-      - name: body
-        label: Contenuto
-        type: rich-text
+        required: true
+
+      - name: luogo
+        label: Luogo
+        type: string
+        required: true
+
+      - name: titolo
+        label: Titolo del concerto
+        type: string
+        required: true
+
+      - name: descrizione
+        label: Descrizione
+        type: text
+
+      - name: immagine
+        label: Fotografia del concerto
+        type: image
+
+      - name: programma
+        label: Programma musicale
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: "{titolo} – {autore}"
+        fields:
+          - name: titolo
+            label: Brano
+            type: string
+            required: true
+
+          - name: autore
+            label: Autore
+            type: string
+            required: true
+
+          - name: interpreti
+            label: Interpreti
+            type: string
+
+          - name: oltreLaMusica
+            label: Oltre la musica
+            type: text
+actions:
+  - name: richiesta-revisione
+    label: Richiedi approvazione
+    workflow: richiesta-revisione.yml
+    ref: main
+    cancelable: false
+    confirm:
+      title: Invia le modifiche in revisione?
+      message: Verrà creata una Pull Request verso main. Il sito non verrà pubblicato.
+      button: Richiedi approvazione
