@@ -3,7 +3,7 @@ data: 2026-11-09
 ora: 18:00
 luogo: Sala Prove
 titolo: Concerto di prova CSM
-descrizione: Verifica del sistema di gestione concerti.
+descrizione: Verifica del sistema di gestione concerti.  TEST
 immagine: /immagini/corbetta.jpg
 programma:
   - titolo: Happy birthday
